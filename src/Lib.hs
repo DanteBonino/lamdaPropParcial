@@ -76,6 +76,17 @@ seAlquilaAMenosDe unPrecio = ((<unPrecio) . precio) -- También se podría hacer
 mayorSuperficie :: (Depto -> Depto -> Bool)
 mayorSuperficie = (mayor superficie)
 
+--Punto 4:
+mailsDePersonasInteresadas :: Depto -> [Persona] -> [String]
+mailsDePersonasInteresadas unDepto  = (map mail . cumpleAlgunRequisito unDepto)
 
+cumpleAlgunRequisito :: Depto -> [Persona] -> [Persona]
+cumpleAlgunRequisito unDepto = filter (any (cumpleBusqueda unDepto) . busquedas) 
+
+--Punto 5:
+f ::(Integral a, Ord c) => (z -> c) -> ((z -> Bool) -> d) -> [(a, z)] -> d --Integral x el even y Ord por el menor
+f x y = y.head.map (\(_,z) -> menor x z).filter (even.fst)
+
+x Y z son del mismo tipo
 
 
