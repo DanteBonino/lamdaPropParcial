@@ -39,3 +39,16 @@ ordenarSegunLongitud funcion = ordenarSegun (funcion length)
 -- ordernarSegunLongitud mayor ["a", "aa", "aaa"] y te queda -> ["aaa", "aa", "a"]
 --Si queres ordenarPorMenor:
 -- ordernarSegunLongitud menor ["a", "aa", "aaa"] y te queda -> ["a", "aa", "aaa"]
+
+--Punto 2:
+--a
+ubicadoEn :: [String] -> Depto -> Bool
+ubicadoEn unosBarrios unDepartamento = elem (barrio unDepartamento) unosBarrios
+
+--b
+cumpleRango :: (Num a, Ord a) => (Depto -> a) -> a -> a -> Depto -> Bool
+cumpleRango unaFuncion cotaInferior cotaSuperior = (between cotaInferior cotaSuperior . unaFuncion) 
+
+departamentoDeEjemplo :: Depto
+departamentoDeEjemplo = (1,2,3,"Palermo")
+
