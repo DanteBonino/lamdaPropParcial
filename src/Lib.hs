@@ -52,3 +52,30 @@ cumpleRango unaFuncion cotaInferior cotaSuperior = (between cotaInferior cotaSup
 departamentoDeEjemplo :: Depto
 departamentoDeEjemplo = (1,2,3,"Palermo")
 
+--Punto 3:
+--a
+cumpleBusqueda :: Depto -> Busqueda -> Bool
+cumpleBusqueda unDpto = all ($ unDpto)
+
+--b
+buscar :: Busqueda -> (Depto -> Depto-> Bool) -> [Depto] -> [Depto]
+buscar unosRequisitos unCriterio = (ordenarSegun unCriterio . filter (flip cumpleBusqueda unosRequisitos))
+
+--c
+{-
+En la consola:
+buscar [(ubicadoEn ["Recoleta", "Palermo"]), cumpleRango ambientes 1 2, seAlquilaAMenosDe 6000]  mayorSuperficie
+-}
+
+ejemploDeBuscar :: [Depto] -> [Depto]
+ejemploDeBuscar = buscar [(ubicadoEn ["Recoleta", "Palermo"]), cumpleRango ambientes 1 2, seAlquilaAMenosDe 6000]  mayorSuperficie
+
+seAlquilaAMenosDe :: Int -> Depto -> Bool
+seAlquilaAMenosDe unPrecio = ((<unPrecio) . precio) -- También se podría hacer con cumpleRango precio 0 unPrecio
+
+mayorSuperficie :: (Depto -> Depto -> Bool)
+mayorSuperficie = (mayor superficie)
+
+
+
+
