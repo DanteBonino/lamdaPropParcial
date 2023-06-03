@@ -19,14 +19,15 @@ ordenarSegun criterio (x:xs) = (ordenarSegun criterio.filter (not.criterio x)) x
 
 between x y z = x <= z && y >= z
 
+deptosDeEjemplo :: [Depto]
 deptosDeEjemplo = [(3,80,7500,"Palermo"), (1,45,3500,"Villa Urquiza"), (2,50,5000,"Palermo"), (1,45,5500,"Recoleta")]
 
 --Punto 1:
 mayor :: (Ord b) => (a -> b) -> a -> a -> Bool
-mayor  = cumpleCondicionSegun (flip (<)) 
+mayor  = cumpleCondicionSegun (>) 
 
 menor :: (Ord b) => (a -> b) -> a -> a -> Bool
-menor  = cumpleCondicionSegun (flip (>))
+menor  = cumpleCondicionSegun (<)
 
 cumpleCondicionSegun :: (Ord b) => (b -> b -> Bool) -> (a -> b) -> a -> a -> Bool
 cumpleCondicionSegun unaCondicion unaFuncion unValor = (unaCondicion (unaFuncion unValor) . unaFuncion)
@@ -78,15 +79,16 @@ mayorSuperficie = (mayor superficie)
 
 --Punto 4:
 mailsDePersonasInteresadas :: Depto -> [Persona] -> [String]
-mailsDePersonasInteresadas unDepto  = (map mail . cumpleAlgunRequisito unDepto)
+mailsDePersonasInteresadas unDepto  = (map mail . personasConBusquedasQueCumplanAlgunRequisito unDepto)
 
-cumpleAlgunRequisito :: Depto -> [Persona] -> [Persona]
-cumpleAlgunRequisito unDepto = filter (any (cumpleBusqueda unDepto) . busquedas) 
+personasConBusquedasQueCumplanAlgunRequisito :: Depto -> [Persona] -> [Persona]
+personasConBusquedasQueCumplanAlgunRequisito unDepto = filter (cumpleAlgunRequisito unDepto . busquedas)
+
+cumpleAlgunRequisito :: Depto -> [Busqueda] -> Bool
+cumpleAlgunRequisito unDepto = any (cumpleBusqueda unDepto)
 
 --Punto 5:
-f ::(Integral a, Ord c) => (z -> c) -> ((z -> Bool) -> d) -> [(a, z)] -> d --Integral x el even y Ord por el menor
+f :: (Integral b1, Ord b2) =>(a -> b2) -> ((a -> Bool) -> c) -> [(b1, a)] -> c
 f x y = y.head.map (\(_,z) -> menor x z).filter (even.fst)
-
-x Y z son del mismo tipo
 
 
